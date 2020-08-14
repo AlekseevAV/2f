@@ -7,7 +7,7 @@ This package use build-in macOS security util to manage secrets in keychain stor
 
 ## Install
 
-    go get https://github.com/AlekseevAV/2f
+    go get github.com/AlekseevAV/2f
 
 ## Usage
 
@@ -57,6 +57,6 @@ By default all keys created with 6 digits code, but you can set 7 or 8 digits by
 
 ## Other
 
-Inspired by this project - [https://github.com/rsc/2fa](https://github.com/rsc/2fa)
-But storing keys in files with base32 encoding just not too secure for me. And I think that in macOS we can
-store such secrets in built-in keychain.
+Inspired by this project - [https://github.com/rsc/2fa](https://github.com/rsc/2fa).
+
+But storing keys in files with base32 encoding just not enough secure for me.
