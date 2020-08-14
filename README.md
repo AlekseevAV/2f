@@ -7,6 +7,15 @@ This package use build-in macOS security util to manage secrets in keychain stor
 
 ## Install
 
+Homebrew:
+
+    brew tap alekseevav/tap
+    brew install f2f
+
+Brew formula named `f2f` because of ruby name convention.
+
+From sources:
+
     go get github.com/AlekseevAV/2f
 
 ## Usage
@@ -19,11 +28,14 @@ New keychain storage will be created on first run:
 
 After that you can find new keychain in "Keychain Access.app" and get full access with your password.
 
+You can specify keychain name by setting `KEYCHAIN_NAME` environment variable.
+
 All available commands:
 
     2f -add [-7] [-8] name
     2f -delete name
     2f -list
+    2f -help
     2f name
 
 ## Example

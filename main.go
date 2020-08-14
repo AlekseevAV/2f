@@ -18,7 +18,14 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
-var defaultKeyChainName = "2f_test.keychain"
+func getEnv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}
+
+var defaultKeyChainName = fmt.Sprintf("%s.keychain", getEnv("KEYCHAIN_NAME", "2f"))
 
 var (
 	flagAdd    = flag.Bool("add", false, "add a key")
