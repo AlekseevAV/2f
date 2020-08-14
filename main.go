@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"crypto/hmac"
 	"crypto/sha1"
 	"encoding/base32"
@@ -16,9 +15,10 @@ import (
 	"unicode"
 
 	"github.com/AlekseevAV/2f/keychainUtils"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
-var defaultKeyChainName = "2f.keychain"
+var defaultKeyChainName = "2f_test.keychain"
 
 var (
 	flagAdd    = flag.Bool("add", false, "add a key")
@@ -35,6 +35,15 @@ func usage() {
 	_, _ = fmt.Fprintf(os.Stderr, "\t2f -list\n")
 	_, _ = fmt.Fprintf(os.Stderr, "\t2f keyname\n")
 	os.Exit(2)
+}
+
+func askForPassword(promptText string) string {
+	fmt.Print(promptText)
+	bytePassword, err := terminal.ReadPassword(0)
+	if err != nil {
+		log.Fatalf("error gettings password: %v", err)
+	}
+	return string(bytePassword)
 }
 
 func main() {
@@ -87,11 +96,7 @@ type Key struct {
 }
 
 func createKeychain(name string) keychainUtils.KeyChain {
-	_, _ = fmt.Fprintf(os.Stderr, "2f password for new keychain: ")
-	password, err := bufio.NewReader(os.Stdin).ReadString('\n')
-	if err != nil {
-		log.Fatalf("error creating keychain: %v", err)
-	}
+	password := askForPassword("2f password for new keychain: ")
 	keychainUtils.CreateKeyChain(name, strings.Trim(password, "\n"))
 	createdKeyChain, err := keychainUtils.GetKeyChain(name)
 	if err != nil {
@@ -151,14 +156,9 @@ func (c *Keychain) add(name string) {
 	} else if *flag8 {
 		size = 8
 	}
-
-	_, _ = fmt.Fprintf(os.Stderr, "2f key for %s: ", name)
-	text, err := bufio.NewReader(os.Stdin).ReadString('\n')
-	if err != nil {
-		log.Fatalf("error reading key: %v", err)
-	}
-	text = strings.Map(noSpace, text)
-	keychainUtils.AddPassword(name, name, text, strings.Repeat("x", size), c.name)
+	key := askForPassword(fmt.Sprintf("2f key for %s: ", name))
+	key = strings.Map(noSpace, key)
+	keychainUtils.AddPassword(name, name, key, strings.Repeat("x", size), c.name)
 }
 
 func (c *Keychain) delete(name string) {
