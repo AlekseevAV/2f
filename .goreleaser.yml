@@ -27,7 +27,7 @@ brews:
     name: f2f
     tap:
       owner: AlekseevAV
-      name: homebrew-2f
+      name: homebrew-tap
     commit_author:
       name: Aleksandr Alekseev
       email: alekseevavx@gmail.com
