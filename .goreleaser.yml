@@ -24,7 +24,7 @@ changelog:
       - '^test:'
 brews:
   -
-    name: 2f
+    name: f2f
     tap:
       owner: AlekseevAV
       name: homebrew-2f
