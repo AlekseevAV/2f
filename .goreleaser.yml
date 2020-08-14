@@ -1,0 +1,42 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+archives:
+  - replacements:
+      darwin: Darwin
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: '{{ .ProjectName }}_checksums.txt'
+  algorithm: sha256
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+brews:
+  -
+    name: 2f
+    tap:
+      owner: AlekseevAV
+      name: homebrew-2f
+    commit_author:
+      name: Aleksandr Alekseev
+      email: alekseevavx@gmail.com
+    folder: Formula
+    caveats: "Two-factor authentication agent"
+    homepage: "https://github.com/AlekseevAV/2f"
+    description: "Use build-in macOS security util to manage secrets in keychain storage."
+    # Packages your package depends on.
+    dependencies:
+      - name: go
+    test: |
+      system "#{bin}/2f -help"
