@@ -24,6 +24,7 @@ var (
 	flagAdd    = flag.Bool("add", false, "add a key")
 	flagDelete = flag.Bool("delete", false, "delete a key")
 	flagList   = flag.Bool("list", false, "list keys")
+	flagHelp   = flag.Bool("help", false, "print help")
 	flag7      = flag.Bool("7", false, "generate 7-digit code")
 	flag8      = flag.Bool("8", false, "generate 8-digit code")
 )
@@ -33,6 +34,7 @@ func usage() {
 	_, _ = fmt.Fprintf(os.Stderr, "\t2f -add [-7] [-8] keyname\n")
 	_, _ = fmt.Fprintf(os.Stderr, "\t2f -delete keyname\n")
 	_, _ = fmt.Fprintf(os.Stderr, "\t2f -list\n")
+	_, _ = fmt.Fprintf(os.Stderr, "\t2f -help\n")
 	_, _ = fmt.Fprintf(os.Stderr, "\t2f keyname\n")
 	os.Exit(2)
 }
@@ -51,6 +53,11 @@ func main() {
 	log.SetFlags(0)
 	flag.Usage = usage
 	flag.Parse()
+
+	if *flagHelp {
+		usage()
+		return
+	}
 
 	k := readKeychain(defaultKeyChainName)
 
