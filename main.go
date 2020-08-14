@@ -47,7 +47,7 @@ func usage() {
 }
 
 func askForPassword(promptText string) string {
-	fmt.Print(promptText)
+	fmt.Println(promptText)
 	bytePassword, err := terminal.ReadPassword(0)
 	if err != nil {
 		log.Fatalf("error gettings password: %v", err)
