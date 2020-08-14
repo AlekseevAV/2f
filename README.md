@@ -4,6 +4,7 @@ Currently support only macOS.
 
 This package use build-in macOS security util to manage secrets in keychain storage. 
 
+![2f demo](docs/2f_demo.gif)
 
 ## Install
 
